@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>QuizMaster</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- ─── SCREEN: Home ──────────────────────────────────────── -->
+<div id="screen-home" class="screen active">
+  <div class="mb-24">
+    <div class="logo">QuizMaster</div>
+    <div class="logo-sub">Multiplayer em Tempo Real</div>
+  </div>
+  <div class="choice-grid">
+    <button class="choice-btn" onclick="App.showScreen('screen-host-setup')">
+      <span class="choice-icon">🎮</span>
+      <span class="choice-label">Criar Sala</span>
+    </button>
+    <button class="choice-btn" onclick="App.showScreen('screen-join')">
+      <span class="choice-icon">🎯</span>
+      <span class="choice-label">Entrar</span>
+    </button>
+  </div>
+</div>
+
+<!-- ─── SCREEN: Host Setup ────────────────────────────────── -->
+<div id="screen-host-setup" class="screen">
+  <div class="card max-w">
+    <h2 class="mb-16">Criar Sala</h2>
+    <div class="input-group">
+      <label>Seu nome (host)</label>
+      <input id="host-name" type="text" placeholder="Ex: Professor João" maxlength="20" />
+    </div>
+    <button class="btn btn-primary" onclick="App.createRoom()">Criar Sala</button>
+    <button class="btn btn-secondary mt-12" onclick="App.showScreen('screen-home')">Voltar</button>
+  </div>
+</div>
+
+<!-- ─── SCREEN: Join ──────────────────────────────────────── -->
+<div id="screen-join" class="screen">
+  <div class="card max-w">
+    <h2 class="mb-16">Entrar na Sala</h2>
+    <div class="input-group">
+      <label>Código da Sala</label>
+      <input id="join-code" type="text" placeholder="Ex: ABC123" maxlength="6" style="text-transform:uppercase" />
+    </div>
+    <div class="input-group">
+      <label>Seu apelido</label>
+      <input id="join-name" type="text" placeholder="Ex: Maria" maxlength="20" />
+    </div>
+    <button class="btn btn-primary" onclick="App.joinRoom()">Entrar</button>
+    <button class="btn btn-secondary mt-12" onclick="App.showScreen('screen-home')">Voltar</button>
+  </div>
+</div>
+
+<!-- ─── SCREEN: Host Lobby ────────────────────────────────── -->
+<div id="screen-host-lobby" class="screen">
+  <div class="card max-w" style="text-align:center;">
+    <h3 class="mb-8">Código da Sala</h3>
+    <div id="lobby-code" class="room-code mb-8">------</div>
+    <p class="text-muted mb-16">Compartilhe este código com os jogadores</p>
+    <div class="divider"></div>
+    <h3 class="mb-12">Jogadores (<span id="lobby-count">0</span>)</h3>
+    <div id="lobby-player-list" class="player-list mb-16"></div>
+    <div class="divider"></div>
+    <button id="btn-start" class="btn btn-success" onclick="App.startGame()" disabled>
+      Iniciar Jogo
+    </button>
+    <p class="text-muted mt-12" id="start-hint">Aguardando jogadores...</p>
+  </div>
+</div>
+
+<!-- ─── SCREEN: Player Lobby (waiting) ───────────────────── -->
+<div id="screen-player-lobby" class="screen">
+  <div class="card max-w" style="text-align:center;">
+    <div class="waiting-icon">⏳</div>
+    <h2 class="mb-8">Aguardando</h2>
+    <p class="text-muted mb-16">O host vai iniciar o jogo em breve</p>
+    <div class="divider"></div>
+    <h3 class="mb-12">Sala: <span id="player-lobby-code" class="badge badge-accent"></span></h3>
+    <h3 class="mb-12">Jogadores</h3>
+    <div id="player-lobby-list" class="player-list"></div>
+  </div>
+</div>
+
+<!-- ─── SCREEN: Question (Player) ────────────────────────── -->
+<div id="screen-question" class="screen">
+  <div class="max-w" style="width:100%">
+    <!-- Timer & meta -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+      <div style="flex:1">
+        <div class="timer-bar-wrap"><div id="timer-bar" class="timer-bar" style="width:100%"></div></div>
+      </div>
+      <div id="timer-value" class="timer-value">--</div>
+    </div>
+    <div id="q-meta" class="question-meta">Pergunta 1 de 5</div>
+    <div id="progress-dots" class="progress-dots"></div>
+
+    <div id="q-title" class="question-title mb-12">Carregando...</div>
+
+    <!-- Items pool -->
+    <div style="margin-bottom:8px;">
+      <small>Selecione um item e depois clique em uma categoria para classificá-lo</small>
+    </div>
+    <div id="items-pool" class="items-pool"></div>
+
+    <!-- Categories -->
+    <div id="categories-grid" class="categories-grid"></div>
+
+    <button class="btn btn-primary" id="btn-submit" onclick="App.submitAnswer()" disabled>
+      ✓ Enviar Resposta
+    </button>
+  </div>
+</div>
+
+<!-- ─── SCREEN: Question (Host View) ─────────────────────── -->
+<div id="screen-host-question" class="screen">
+  <div class="card max-w" style="text-align:center;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+      <div style="flex:1">
+        <div class="timer-bar-wrap"><div id="host-timer-bar" class="timer-bar" style="width:100%"></div></div>
+      </div>
+      <div id="host-timer-value" class="timer-value">--</div>
+    </div>
+    <div id="host-q-meta" class="question-meta mb-8">Pergunta 1 de 5</div>
+    <div id="host-q-title" class="question-title mb-16"></div>
+    <div class="divider"></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--accent)" id="host-answered">0</div>
+        <small>responderam</small>
+      </div>
+      <div style="color:var(--muted);">de</div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--text)" id="host-total">0</div>
+        <small>jogadores</small>
+      </div>
+    </div>
+    <button class="btn btn-danger btn-sm" onclick="App.endQuestion()">Encerrar Pergunta</button>
+  </div>
+</div>
+
+<!-- ─── SCREEN: Scoreboard ────────────────────────────────── -->
+<div id="screen-scoreboard" class="screen">
+  <div class="max-w" style="width:100%">
+    <h2 class="text-center mb-8">Placar</h2>
+    <p id="scoreboard-subtitle" class="text-muted text-center mb-16"></p>
+
+    <!-- Personal result (players only) -->
+    <div id="my-result" class="card mb-16" style="display:none">
+      <h3 class="mb-12">Seu resultado</h3>
+      <div id="my-score-line" style="font-size:1rem;font-weight:600;margin-bottom:12px;"></div>
+      <div id="answer-review" class="answer-review"></div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div id="leaderboard" class="leaderboard mb-16"></div>
+
+    <!-- Host: next button -->
+    <div id="host-next-wrap" style="display:none">
+      <button class="btn btn-primary" onclick="App.nextQuestion()">Próxima Pergunta →</button>
+    </div>
+    <p id="waiting-next" class="text-muted text-center" style="display:none">Aguardando o host...</p>
+  </div>
+</div>
+
+<!-- ─── SCREEN: Final ─────────────────────────────────────── -->
+<div id="screen-final" class="screen">
+  <div class="max-w" style="width:100%;text-align:center;">
+    <div style="font-size:3rem;margin-bottom:12px;">🏆</div>
+    <div class="logo mb-8" style="font-size:3rem;">Fim de Jogo!</div>
+    <p class="text-muted mb-24">Ranking Final</p>
+    <div id="final-leaderboard" class="leaderboard mb-24"></div>
+    <button class="btn btn-secondary" onclick="location.reload()">Jogar Novamente</button>
+  </div>
+</div>
+
+<!-- ─── Toast ─────────────────────────────────────────────── -->
+<div id="toast"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

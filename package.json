@@ -1,14 +1,17 @@
 {
-  "name": "nodejs-sandbox",
+  "name": "quizmaster",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Real-time multiplayer quiz game inspired by Kahoot",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node --watch index.js"
+    "start": "node src/server.js",
+    "dev": "npx nodemon src/server.js"
   },
-  "keywords": [],
-  "author": "Ives van Hoorne",
-  "license": "MIT",
-  "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.22.1",
+    "socket.io": "^4.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }
