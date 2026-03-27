@@ -1,211 +1,397 @@
-// ============================================================
-// BANCO DE PERGUNTAS — edite aqui para personalizar o jogo
-// ============================================================
+const PESSOAS = ["Guilherme","Murilo","Goes","Coach","Branco",
+  "Leandro","Marcella","Nicolas","Isabela","Pedro",
+  "Vic","Helder","Angela","Rebeca","Bruno"];
+
+const COLOR = "#f59e0b";
+const TIME_LIMIT = 45;
 
 const QUESTIONS = [
   {
     id: 1,
-    title: "Classifique os animais pelo habitat principal",
-    timeLimit: 45,
-    items: [
-      "Tubarão", "Leão", "Pinguim", "Águia", "Polvo",
-      "Elefante", "Baleia", "Macaco", "Tartaruga", "Falcão",
-      "Cobra", "Golfinho", "Girafa", "Albatroz", "Orca"
-    ],
+    title: "Qual o seu nome?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
     categories: [
-      {
-        id: "oceano",
-        label: "🌊 Oceano",
-        color: "#0ea5e9",
-        slots: 4,
-        correct: ["Tubarão", "Polvo", "Baleia", "Golfinho", "Orca", "Tartaruga"]
-      },
-      {
-        id: "savana",
-        label: "🌾 Savana",
-        color: "#f59e0b",
-        slots: 4,
-        correct: ["Leão", "Elefante", "Girafa", "Cobra"]
-      },
-      {
-        id: "ceu",
-        label: "🦅 Céu / Ar",
-        color: "#8b5cf6",
-        slots: 3,
-        correct: ["Águia", "Falcão", "Albatroz", "Pinguim"]
-      },
-      {
-        id: "floresta",
-        label: "🌿 Floresta",
-        color: "#22c55e",
-        slots: 4,
-        correct: ["Macaco", "Cobra", "Tartaruga", "Pinguim"]
-      }
+      { id: "mara_p_poli",       label: "mara p poli",                                    color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "murilo",            label: "Murilo",                                          color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "helder_boffetti",   label: "Helder \"Johan não fez nada de errado\" Boffetti", color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "bruno_toledo",      label: "Bruno Toledo Chiavolotti",                        color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "thiago",            label: "Thiago Maia Marques",                             color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "chico_kim_i",       label: "Chico Kim",                                       color: COLOR, slots: 2, correct: ["Isabela","Nicolas"] },
+      { id: "gogner",            label: "Gogner lu",                                       color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "guilherme",         label: "Guilherme",                                       color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "gabriel_branco",    label: "Gabriel Branco Guedes",                           color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "rebeca",            label: "rebeca",                                          color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "angela",            label: "Angela",                                          color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "victoria",          label: "Até onde eu sei é Victoria",                      color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "leandro",           label: "Leandro",                                         color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "pedro",             label: "Pedro",                                           color: COLOR, slots: 1, correct: ["Pedro"] },
     ]
   },
   {
     id: 2,
-    title: "Classifique os países pelo continente",
-    timeLimit: 40,
-    items: [
-      "Brasil", "Japão", "Egito", "Canadá", "Nigéria",
-      "Índia", "Argentina", "França", "Quênia", "China",
-      "México", "Austrália", "Etiópia", "Coreia do Sul", "Peru"
-    ],
+    title: "Sexo?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
     categories: [
-      {
-        id: "americas",
-        label: "🌎 Américas",
-        color: "#ef4444",
-        slots: 4,
-        correct: ["Brasil", "Canadá", "Argentina", "México", "Peru"]
-      },
-      {
-        id: "asia",
-        label: "🌏 Ásia",
-        color: "#f97316",
-        slots: 4,
-        correct: ["Japão", "Índia", "China", "Coreia do Sul"]
-      },
-      {
-        id: "africa",
-        label: "🌍 África",
-        color: "#eab308",
-        slots: 3,
-        correct: ["Egito", "Nigéria", "Quênia", "Etiópia"]
-      },
-      {
-        id: "outros",
-        label: "🗺️ Europa/Oceania",
-        color: "#06b6d4",
-        slots: 4,
-        correct: ["França", "Austrália"]
-      }
+      { id: "nao_slc",        label: "não slc impureza",              color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "sim_murilo",     label: "Sim",                           color: COLOR, slots: 2, correct: ["Murilo","Pedro"] },
+      { id: "gosto",          label: "Gosto",                         color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "nao_gosto",      label: "Não gosto",                     color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "homem",          label: "Homem",                         color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "furry",          label: "furry",                         color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "cabra_macho",    label: "Cabra macho",                   color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "masculino",      label: "Masculino",                     color: COLOR, slots: 3, correct: ["Guilherme","Branco","Leandro"] },
+      { id: "nao_rebeca",     label: "não",                           color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "femea",          label: "Femea",                         color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "so_pedro",       label: "Só com o pedro",                color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "masc_maioria",   label: "Masculino na maioria das vezes",color: COLOR, slots: 1, correct: ["Nicolas"] },
     ]
   },
   {
     id: 3,
-    title: "Classifique os alimentos pelo grupo nutricional",
-    timeLimit: 50,
-    items: [
-      "Arroz", "Frango", "Banana", "Leite", "Feijão",
-      "Pão", "Ovo", "Maçã", "Queijo", "Macarrão",
-      "Atum", "Laranja", "Iogurte", "Batata", "Carne bovina"
-    ],
+    title: "Quantos anos você tem?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
     categories: [
-      {
-        id: "carboidratos",
-        label: "🍞 Carboidratos",
-        color: "#f59e0b",
-        slots: 4,
-        correct: ["Arroz", "Pão", "Macarrão", "Batata"]
-      },
-      {
-        id: "proteinas",
-        label: "💪 Proteínas",
-        color: "#ef4444",
-        slots: 4,
-        correct: ["Frango", "Feijão", "Ovo", "Atum", "Carne bovina"]
-      },
-      {
-        id: "frutas",
-        label: "🍎 Frutas",
-        color: "#22c55e",
-        slots: 3,
-        correct: ["Banana", "Maçã", "Laranja"]
-      },
-      {
-        id: "laticinios",
-        label: "🥛 Laticínios",
-        color: "#3b82f6",
-        slots: 4,
-        correct: ["Leite", "Queijo", "Iogurte"]
-      }
+      { id: "18", label: "18",              color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "22", label: "22",              color: COLOR, slots: 4, correct: ["Murilo","Bruno","Coach","Leandro"] },
+      { id: "23", label: "23",              color: COLOR, slots: 2, correct: ["Marcella","Pedro"] },
+      { id: "23_mes", label: "23 até mês que vem", color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "23_98", label: "23,98",        color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "24", label: "24",              color: COLOR, slots: 2, correct: ["Helder","Angela","Rebeca"] },
+      { id: "25", label: "25",              color: COLOR, slots: 3, correct: ["Goes","Guilherme","Branco"] },
     ]
   },
   {
     id: 4,
-    title: "Classifique os elementos pelo estado físico à temperatura ambiente",
-    timeLimit: 35,
-    items: [
-      "Ferro", "Mercúrio", "Oxigênio", "Ouro", "Água",
-      "Nitrogênio", "Cobre", "Bromo", "Hidrogênio", "Prata",
-      "Cloro", "Alumínio", "Hélio", "Chumbo", "Flúor"
-    ],
+    title: "Qual sua religião?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
     categories: [
-      {
-        id: "solido",
-        label: "🧱 Sólido",
-        color: "#78716c",
-        slots: 5,
-        correct: ["Ferro", "Ouro", "Cobre", "Prata", "Alumínio", "Chumbo"]
-      },
-      {
-        id: "liquido",
-        label: "💧 Líquido",
-        color: "#0ea5e9",
-        slots: 3,
-        correct: ["Mercúrio", "Água", "Bromo"]
-      },
-      {
-        id: "gasoso",
-        label: "💨 Gasoso",
-        color: "#a3e635",
-        slots: 7,
-        correct: ["Oxigênio", "Nitrogênio", "Hidrogênio", "Cloro", "Hélio", "Flúor"]
-      }
+      { id: "agnostica",    label: "agnóstica amém",                color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "jesus",        label: "Cristo Jesu / Jesus é top",     color: COLOR, slots: 2, correct: ["Murilo","Guilherme"] },
+      { id: "ateu",         label: "Ateísmo / Ateu / Ateu fudido",  color: COLOR, slots: 3, correct: ["Helder","Bruno","Branco"] },
+      { id: "catolico",     label: "Católico 🙏",                   color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "sao_jose",     label: "devoto de são josé",            color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "nenhuma",      label: "Nenhuma",                       color: COLOR, slots: 2, correct: ["Goes","Rebeca"] },
+      { id: "espirita",     label: "Espirita",                      color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "macumbeira",   label: "Macumbeira",                    color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "nordica",      label: "Nórdica",                       color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "budista",      label: "Budista 🕉️",                   color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "budismo_bunda",label: "budismo amo bundas",            color: COLOR, slots: 1, correct: ["Pedro"] },
     ]
   },
   {
     id: 5,
-    title: "Classifique os esportes pela modalidade",
-    timeLimit: 45,
-    items: [
-      "Natação", "Futebol", "Tênis", "Basquete", "Surfe",
-      "Vôlei", "Polo Aquático", "Handebol", "Canoagem", "Badminton",
-      "Rúgbi", "Mergulho", "Futsal", "Squash", "Triatlo"
-    ],
+    title: "Que time você torce?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
     categories: [
-      {
-        id: "aquatico",
-        label: "🏊 Aquático",
-        color: "#0284c7",
-        slots: 4,
-        correct: ["Natação", "Surfe", "Polo Aquático", "Canoagem", "Mergulho", "Triatlo"]
-      },
-      {
-        id: "campo",
-        label: "⚽ Campo / Quadra Grande",
-        color: "#16a34a",
-        slots: 4,
-        correct: ["Futebol", "Basquete", "Vôlei", "Handebol", "Rúgbi"]
-      },
-      {
-        id: "raquete",
-        label: "🎾 Raquete",
-        color: "#dc2626",
-        slots: 3,
-        correct: ["Tênis", "Badminton", "Squash"]
-      },
-      {
-        id: "sala",
-        label: "🏟️ Sala / Fechado",
-        color: "#7c3aed",
-        slots: 4,
-        correct: ["Futsal", "Basquete", "Badminton", "Squash", "Handebol"]
-      }
+      { id: "que_pergunta",  label: "que pergunta",                                            color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "corinthians",   label: "Corinthians / Sport Club Corinthians Paulista / TIMÃO",   color: COLOR, slots: 4, correct: ["Murilo","Bruno","Coach","Vic"] },
+      { id: "nenhum_espi",   label: "Nenhum mas espiritualmente São Bernardo",                 color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "palmeiras",     label: "Palmeiras / PALMEIRAS!!!!!! / Parmera",                   color: COLOR, slots: 3, correct: ["Isabela","Nicolas","Leandro"] },
+      { id: "nenhum",        label: "Nenhum",                                                  color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "fluminense",    label: "Fluminense Football Club",                                color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "saopaulo",      label: "São Paulo",                                               color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "internacional", label: "internacional de porto alegre",                           color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "santos",        label: "Santos",                                                  color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "molhado",       label: "pro que ta molhado 😂😂",                                color: COLOR, slots: 1, correct: ["Pedro"] },
     ]
-  }
+  },
+  {
+    id: 6,
+    title: "Qual sua estação do ano preferida?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "primavera",    label: "Primavera",                   color: COLOR, slots: 2, correct: ["Marcella","Vic"] },
+      { id: "verao",        label: "Verão",                       color: COLOR, slots: 4, correct: ["Murilo","Bruno","Guilherme","Leandro"] },
+      { id: "inverno",      label: "Inverno / inverno <333",      color: COLOR, slots: 6, correct: ["Helder","Coach","Goes","Branco","Angela","Pedro"] },
+      { id: "lolla",        label: "lollapalooza",                color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "outono",       label: "Outono",                      color: COLOR, slots: 2, correct: ["Rebeca","Nicolas"] },
+    ]
+  },
+  {
+    id: 7,
+    title: "Quem você pretende votar para presidente em 2026?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "faz_o_l",      label: "Faz o L / FAZOL",            color: COLOR, slots: 2, correct: ["Marcella","Vic"] },
+      { id: "juliano_floss",label: "Juliano Floss",               color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "alckmin",      label: "Alckmin",                     color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "sofia",        label: "Sofia Manzano",               color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "branco_voto",  label: "Branco",                      color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "ana_paula",    label: "ana paula renault",           color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "ngm",          label: "Ngm",                         color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "lula",         label: "Lula / lula lá",              color: COLOR, slots: 2, correct: ["Guilherme","Rebeca"] },
+      { id: "jones",        label: "Jones Manoel",                color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "vish_sla",     label: "Vish sla",                    color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "sei_nem",      label: "Sei nem quem ta disputando",  color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "moro",         label: "Sergio Moro",                 color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "lulonaro",     label: "lulonaro",                    color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 8,
+    title: "Qual emoji você mais usa?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "😀", label: "😀", color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "👍", label: "👍", color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "💔🧘😭", label: "💔🧘‍♂️😭", color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "😋", label: "😋", color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "🫡", label: "🫡", color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "😜", label: "😜", color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "💀", label: "💀", color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "🥺", label: "🥺", color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "🥰", label: "🥰", color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "😎", label: "😎", color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "saudade", label: ";-;", color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "😭", label: "😭", color: COLOR, slots: 2, correct: ["Vic","Pedro"] },
+      { id: "🙏", label: "🙏", color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "🤨", label: "🤨", color: COLOR, slots: 1, correct: ["Leandro"] },
+    ]
+  },
+  {
+    id: 9,
+    title: "Qual sua música preferida?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "eu_vou_torcer",   label: "não tenho uma preferida mas no momento a que não sai do meu fone é \"Eu vou torcer - Jorge Ben Jor\"", color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "todas_matue",     label: "Todas do matue",                                                                                       color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "david_bowie",     label: "Aquela lá do David Bowie",                                                                             color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "foldin",          label: "Foldin Clothes - J Cole",                                                                              color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "lucido_dreams",   label: "Lúcido Dreams - Juice WRLD",                                                                           color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "idiota",          label: "idiota - jão",                                                                                         color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "nenhuma",         label: "Nenhuma",                                                                                              color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "clareou",         label: "Clareou",                                                                                              color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "4_yourz",         label: "4 yourz eyes only",                                                                                    color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "raparigas",       label: "raparigas - filho do piseiro",                                                                         color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "jubiru",          label: "Jubiru",                                                                                               color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "horizons",        label: "Horizons- blazy e tem outra q amo q é everytime we touch versão do eletric callboy",                   color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "morse",           label: ".-...-..---.---",                                                                                      color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "depende",         label: "Depende",                                                                                              color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "sandstorm",       label: "darude sandstorm",                                                                                     color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 10,
+    title: "Qual seu artista/banda preferida?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "imagine_dragons", label: "imagine dragões",       color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "matue",           label: "Matue",                 color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "david_bowie",     label: "David Bowie",           color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "j_cole",          label: "J Cole",                color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "juice_wrld",      label: "Juice WRLD",            color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "slipknot",        label: "slipknot",              color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "n_tenho",         label: "N tenho",               color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "paramore",        label: "Paramore",              color: COLOR, slots: 2, correct: ["Guilherme","Branco"] },
+      { id: "filho_piseiro",   label: "filho do piseiro",      color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "angela_destro",   label: "Angela Destro",         color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "ajr",             label: "AJR",                   color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "baco_exu",        label: "Baco exu do blues",     color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "brent_faiyaz",    label: "Hoje? Brent Faiyaz",   color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "skylab",          label: "Rogério Skylab",        color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 11,
+    title: "Quem você seria no BBB? Estrategista, planta, líder, etc",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "campea",       label: "campeã que sofreu mais que a juliette",     color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "matue_bbb",    label: "Matue",                                     color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "planta_exp",   label: "Planta/Expulso e condenado criminalmente pós BBB", color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "planta",       label: "Planta",                                    color: COLOR, slots: 5, correct: ["Rebeca","Bruno","Coach","Branco","Nicolas"] },
+      { id: "ana_bbb",      label: "ANA PAULA RENAULT",                         color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "primeiro_eli", label: "Primeiro eliminado",                        color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "manipulador",  label: "Manipulador",                               color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "juliano",      label: "Juliano Floss",                             color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "mae",          label: "Mãe (aquela que quer cuidar de todo mundo)",color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "fdp",          label: "Um grande filho da puta",                   color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "ganha",        label: "o que ganha",                               color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 12,
+    title: "Qual o seu maior medo?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "voz",         label: "perder a voz ou a audição",                              color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "morte_matue", label: "A morte do Matue",                                       color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "alzheimer",   label: "Ter alzheimer",                                          color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "banho",       label: "Morrer tomando banho",                                   color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "zumbi",       label: "Zumbi",                                                  color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "ana_bbb",     label: "a ana paula renault ser expulsa do bbb de novo",         color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "vazio",       label: "Do vazio infinito do universo",                          color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "vento",       label: "Vento",                                                  color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "solidao",     label: "Morrer sozinho / Solidão",                               color: COLOR, slots: 2, correct: ["Branco","Leandro"] },
+      { id: "moto",        label: "cair da moto e me ralar",                                color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "cobra_alt",   label: "cobra e altura",                                         color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "dante",       label: "Perder o Dante ou o pedro (e escuro)",                   color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "guilhe_elim", label: "Guilherme cunha morrer/ser eliminado do jogo",           color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "pessoas",     label: "pessoas",                                                color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 13,
+    title: "Se você fosse um animal, qual seria?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "gaviao",       label: "GAVIÃO",          color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "tardigrado",   label: "Tardigrado",      color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "cobra",        label: "Cobra",           color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "coruja",       label: "Coruja",          color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "castor",       label: "Castor",          color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "dragao",       label: "dragão asiatico", color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "hipopotamo",   label: "Hipopótamo",      color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "gato",         label: "Gato",            color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "urso",         label: "Urso",            color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "rato",         label: "rato",            color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "lontra",       label: "Lontra",          color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "tarsio",       label: "Tarsio",          color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "cachorro",     label: "Cachorro",        color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "pinguim",      label: "Pinguim",         color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "ursoruja",     label: "ursoruja",        color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 14,
+    title: "Pedra, papel ou tesoura?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "papel",        label: "Papel",                                                          color: COLOR, slots: 4, correct: ["Marcella","Murilo","Goes","Rebeca"] },
+      { id: "pedra_helder", label: "Pedra mogga os betinhas do papel e não sobra nada pra tesoura", color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "pedra",        label: "Pedra",                                                          color: COLOR, slots: 4, correct: ["Nicolas","Bruno","Guilherme","Branco"] },
+      { id: "tesoura",      label: "Tesoura",                                                        color: COLOR, slots: 4, correct: ["Isabela","Angela","Coach","Leandro"] },
+      { id: "tesourinha",   label: "Tesourinha 😈",                                                  color: COLOR, slots: 1, correct: ["Vic",] },
+      { id: "primeiro",     label: "PRIMEIRO VEM A PEDRA!",                                          color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 15,
+    title: "Qual seu campeão preferido do LoL?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "sejuani",  label: "sejuani girl boss perfeita não deita pros inimigos em cima do seu porcão", color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "sett",     label: "Sett",                                                                     color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "leona",    label: "Jax e Annie mas eu não sou pedófilo então bota aí Leona e Janna",         color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "malphite", label: "Malphite",                                                                 color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "garen",    label: "Garen",                                                                    color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "lux",      label: "lux",                                                                      color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "emoji_lol",label: "🙆‍♀️🔫🤪",                                                             color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "malzahar", label: "Malzahar",                                                                 color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "ekko",     label: "ekko",                                                                     color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "sona",     label: "sona",                                                                     color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "ashe",     label: "Ashe",                                                                     color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "yummy",    label: "Yummy (n sei escrever)",                                                   color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "fiora",    label: "Fiora",                                                                    color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "kayn",     label: "Kayn",                                                                     color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "udy",      label: "udy",                                                                      color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 16,
+    title: "Escolha um número entre 1 e 10",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "sete",   label: "7",   color: COLOR, slots: 5, correct: ["Marcella","Helder","Guilherme","Branco","Pedro"] },
+      { id: "oito",   label: "8",   color: COLOR, slots: 3, correct: ["Murilo","Bruno","Vic"] },
+      { id: "seis",   label: "6",   color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "sete5",  label: "7,5", color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "tres",   label: "3",   color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "nove",   label: "9",   color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "quatro", label: "4",   color: COLOR, slots: 1, correct: ["Leandro"] },
+      { id: "dez",    label: "10",  color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "cinco",  label: "5",   color: COLOR, slots: 1, correct: ["Rebeca"] },
+    ]
+  },
+  {
+    id: 17,
+    title: "Qual app vc mais usa no celular?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "cuitter",      label: "cuitter infelizmente",          color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "google_forms", label: "Definitivamente o Google forms",color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "google",       label: "Google",                        color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "instagram",    label: "Instagram",                     color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "tiktok",       label: "Tiktok",                        color: COLOR, slots: 4, correct: ["Branco","Coach","Goes","Guilherme"] },
+      { id: "tik_tokerson", label: "tik tokerson",                  color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "zap_lea",      label: "Zap",                           color: COLOR, slots: 2, correct: ["Leandro","Nicolas"] },
+      { id: "twitter_x",    label: "twitter (x)",                   color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "whatsapp",     label: "Whatsapp",                      color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "x_kinedu",     label: "X e Kinedu",                    color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "zapzap",       label: "zapzapzapzap",                  color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
+  {
+    id: 18,
+    title: "Qual o evento historico mais foda da historia?",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "hobbit",       label: "Lançamento de The Hobbit (1938) e todas as obras originadas a partir dessa", color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "bastilha",     label: "A queda da bastilha",                                                        color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "defenestracao",label: "Defenestração de Praga",                                                     color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "lua",          label: "Homem na lua",                                                               color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "metodista",    label: "Ser modelo na metodista ( ganhei uma mochila e um lanche)",                  color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "chappell",     label: "chappell roan chutando uma criança brasileira antes do show no lolla 26",    color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "percy",        label: "Filme do percy jackson wladson wladson wladson",                             color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "libertadores", label: "Libertadores 2023",                                                          color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "rev_francesa", label: "Revolução Francesa",                                                         color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "onze",         label: "11 de setembro / 11/9",                                                      color: COLOR, slots: 2, correct: ["Rebeca","Pedro"] },
+      { id: "rev_ind",      label: "Revoluçao industrial",                                                       color: COLOR, slots: 1, correct: ["Angela"] },
+      { id: "dante",        label: "Nascimento de Dante Rafael",                                                 color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "pandemia",     label: "Pandemia - eu vi eu tava",                                                   color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "segunda",      label: "Brasil na segunda guerra",                                                   color: COLOR, slots: 1, correct: ["Leandro"] },
+    ]
+  },
+  {
+    id: 19,
+    title: "Escreva uma palavra",
+    timeLimit: TIME_LIMIT,
+    items: ["Guilherme","Murilo","Goes","Coach","Branco","Leandro","Marcella","Nicolas","Isabela","Pedro","Vic","Helder","Angela","Rebeca","Bruno"],
+    categories: [
+      { id: "supimpa",      label: "supimpa",       color: COLOR, slots: 1, correct: ["Marcella"] },
+      { id: "modulo",       label: "Módulo",         color: COLOR, slots: 1, correct: ["Murilo"] },
+      { id: "menina",       label: "Menina",         color: COLOR, slots: 1, correct: ["Helder"] },
+      { id: "epifania",     label: "Epifania",       color: COLOR, slots: 1, correct: ["Bruno"] },
+      { id: "braquial",     label: "Braquial",       color: COLOR, slots: 1, correct: ["Coach"] },
+      { id: "rocknroll",    label: "rocknroll",      color: COLOR, slots: 1, correct: ["Isabela"] },
+      { id: "energumeno",   label: "Energúmeno",     color: COLOR, slots: 1, correct: ["Goes"] },
+      { id: "pindorama",    label: "Pindorama",      color: COLOR, slots: 1, correct: ["Guilherme"] },
+      { id: "amor",         label: "Amor",           color: COLOR, slots: 1, correct: ["Branco"] },
+      { id: "tabuada",      label: "tabuada",        color: COLOR, slots: 1, correct: ["Rebeca"] },
+      { id: "uma_palavra",  label: "uma palavra",    color: COLOR, slots: 2, correct: ["Angela","Leandro"] },
+      { id: "livro",        label: "Livro",          color: COLOR, slots: 1, correct: ["Vic"] },
+      { id: "petricor",     label: "Petricor",       color: COLOR, slots: 1, correct: ["Nicolas"] },
+      { id: "caleidoscopio",label: "caleidoscópio",  color: COLOR, slots: 1, correct: ["Pedro"] },
+    ]
+  },
 ];
 
 // ============================================================
-// CONFIGURAÇÕES DO JOGO
+// CONFIGURACOES DO JOGO
 // ============================================================
 const GAME_CONFIG = {
-  pointsPerCorrectSlot: 100,     // pontos por slot correto
-  bonusForPerfect: 200,          // bônus por pergunta 100% correta
-  scoreBoardDuration: 8000,      // ms mostrando placar entre rodadas
-  minPlayers: 1,                 // mínimo para iniciar (1 para testes)
+  pointsPerCorrectSlot: 100,
+  bonusForPerfect: 200,
+  scoreBoardDuration: 8000,
+  minPlayers: 1,
 };
 
 module.exports = { QUESTIONS, GAME_CONFIG };
