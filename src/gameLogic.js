@@ -33,8 +33,7 @@ function createRoom(hostSocketId, hostName) {
     status: "lobby", // lobby | question | scoreboard | finished
     players: {}, // socketId -> { name, score, answers }
     currentQuestion: -1,
-    questions: QUESTIONS, // 5 perguntas aleatórias
-    timer: null,
+    questions: [...QUESTIONS], 
     questionStartTime: null,
   };
 

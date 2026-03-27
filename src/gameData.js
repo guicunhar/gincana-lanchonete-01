@@ -3,7 +3,7 @@ const PESSOAS = ["Guilherme","Murilo","Goes","Coach","Branco",
   "Vic","Helder","Angela","Rebeca","Bruno"];
 
 const COLOR = "#f59e0b";
-const TIME_LIMIT = 45;
+const TIME_LIMIT = 120;
 
 const QUESTIONS = [
   {
