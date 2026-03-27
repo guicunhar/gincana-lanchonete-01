@@ -1,12 +1,13 @@
-const { QUESTIONS, GAME_CONFIG } = require('./gameData');
+const { QUESTIONS, GAME_CONFIG } = require("./gameData");
 
 // Rooms stored in memory: { roomCode: RoomState }
 const rooms = {};
 
 function generateCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for (let i = 0; i < 6; i++)
+    code += chars[Math.floor(Math.random() * chars.length)];
   return code;
 }
 
@@ -21,14 +22,16 @@ function shuffle(arr) {
 
 function createRoom(hostSocketId, hostName) {
   let code;
-  do { code = generateCode(); } while (rooms[code]);
+  do {
+    code = generateCode();
+  } while (rooms[code]);
 
   rooms[code] = {
     code,
     hostSocketId,
     hostName,
-    status: 'lobby',       // lobby | question | scoreboard | finished
-    players: {},           // socketId -> { name, score, answers }
+    status: "lobby", // lobby | question | scoreboard | finished
+    players: {}, // socketId -> { name, score, answers }
     currentQuestion: -1,
     questions: shuffle(QUESTIONS).slice(0, 5), // 5 perguntas aleatórias
     timer: null,
@@ -40,19 +43,19 @@ function createRoom(hostSocketId, hostName) {
 
 function joinRoom(code, socketId, playerName) {
   const room = rooms[code.toUpperCase()];
-  if (!room) return { error: 'Sala não encontrada.' };
-  if (room.status !== 'lobby') return { error: 'O jogo já começou.' };
-  if (Object.keys(room.players).length >= 30) return { error: 'Sala cheia.' };
+  if (!room) return { error: "Sala não encontrada." };
+  if (room.status !== "lobby") return { error: "O jogo já começou." };
+  if (Object.keys(room.players).length >= 30) return { error: "Sala cheia." };
 
   const nameTaken = Object.values(room.players).some(
-    p => p.name.toLowerCase() === playerName.toLowerCase()
+    (p) => p.name.toLowerCase() === playerName.toLowerCase()
   );
-  if (nameTaken) return { error: 'Nome já em uso nessa sala.' };
+  if (nameTaken) return { error: "Nome já em uso nessa sala." };
 
   room.players[socketId] = {
     name: playerName,
     score: 0,
-    answers: {},   // questionId -> { assignments: {categoryId: [items]} }
+    answers: {}, // questionId -> { assignments: {categoryId: [items]} }
   };
 
   return { room, player: room.players[socketId] };
@@ -62,26 +65,30 @@ function removePlayer(socketId) {
   for (const code of Object.keys(rooms)) {
     const room = rooms[code];
     if (room.hostSocketId === socketId) {
-      // Host left — clean up room
-      clearTimeout(room.timer);
-      delete rooms[code];
-      return { type: 'host_left', code };
+      // Não deleta imediatamente — dá 30s pro host reconectar
+      room.hostSocketId = null;
+      room.hostDisconnectTimer = setTimeout(() => {
+        clearTimeout(room.timer);
+        delete rooms[code];
+        console.log(`[ROOM] ${code} deleted after host timeout`);
+      }, 30000);
+      return { type: "host_disconnected", code };
     }
     if (room.players[socketId]) {
       const name = room.players[socketId].name;
       delete room.players[socketId];
-      return { type: 'player_left', code, name, room };
+      return { type: "player_left", code, name, room };
     }
   }
   return null;
 }
 
 function getRoomByHost(socketId) {
-  return Object.values(rooms).find(r => r.hostSocketId === socketId);
+  return Object.values(rooms).find((r) => r.hostSocketId === socketId);
 }
 
 function getRoomByPlayer(socketId) {
-  return Object.values(rooms).find(r => r.players[socketId]);
+  return Object.values(rooms).find((r) => r.players[socketId]);
 }
 
 function getRoom(code) {
@@ -93,8 +100,8 @@ function getPublicQuestion(q) {
     id: q.id,
     title: q.title,
     timeLimit: q.timeLimit,
-    items: shuffle(q.items),  // shuffle each time so all clients get random order
-    categories: q.categories.map(c => ({
+    items: shuffle(q.items), // shuffle each time so all clients get random order
+    categories: q.categories.map((c) => ({
       id: c.id,
       label: c.label,
       color: c.color,
@@ -106,10 +113,10 @@ function getPublicQuestion(q) {
 function startNextQuestion(room) {
   room.currentQuestion++;
   if (room.currentQuestion >= room.questions.length) {
-    room.status = 'finished';
+    room.status = "finished";
     return null;
   }
-  room.status = 'question';
+  room.status = "question";
   room.questionStartTime = Date.now();
   const q = room.questions[room.currentQuestion];
   return getPublicQuestion(q);
@@ -126,7 +133,7 @@ function submitAnswer(room, socketId, questionId, assignments) {
   // Prevent duplicate items across categories
   const allChosen = Object.values(assignments).flat();
   const unique = new Set(allChosen);
-  if (unique.size !== allChosen.length) return { error: 'Item duplicado.' };
+  if (unique.size !== allChosen.length) return { error: "Item duplicado." };
 
   // Store answer
   player.answers[questionId] = { assignments, submittedAt: Date.now() };
@@ -194,13 +201,30 @@ function getLeaderboard(room) {
 }
 
 function getRoomPlayerList(room) {
-  return Object.values(room.players).map(p => ({ name: p.name }));
+  return Object.values(room.players).map((p) => ({ name: p.name }));
+}
+
+function rejoinAsHost(socketId, code) {
+  const room = rooms[code];
+  if (!room) return { error: "Sala não encontrada." };
+  // Cancela o timer de destruição
+  clearTimeout(room.hostDisconnectTimer);
+  room.hostSocketId = socketId;
+  return { room };
 }
 
 module.exports = {
-  createRoom, joinRoom, removePlayer,
-  getRoomByHost, getRoomByPlayer, getRoom,
-  startNextQuestion, submitAnswer,
-  calculateScores, getLeaderboard,
-  getRoomPlayerList, GAME_CONFIG,
+  createRoom,
+  joinRoom,
+  removePlayer,
+  rejoinAsHost,
+  getRoomByHost,
+  getRoomByPlayer,
+  getRoom,
+  startNextQuestion,
+  submitAnswer,
+  calculateScores,
+  getLeaderboard,
+  getRoomPlayerList,
+  GAME_CONFIG,
 };
