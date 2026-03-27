@@ -389,7 +389,7 @@ const QUESTIONS = [
 // ============================================================
 const GAME_CONFIG = {
   pointsPerCorrectSlot: 100,
-  bonusForPerfect: 200,
+  bonusForPerfect: 500,
   scoreBoardDuration: 8000,
   minPlayers: 1,
 };

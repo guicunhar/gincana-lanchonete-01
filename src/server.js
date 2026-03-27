@@ -213,5 +213,5 @@ function endQuestion(room) {
 // ─────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`\n🎮 QuizMaster running at http://localhost:${PORT}\n`);
+  console.log(`\n🎮 GINCANA running at http://localhost:${PORT}\n`);
 });
